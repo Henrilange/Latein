@@ -40,6 +40,15 @@
                 </div>
                 <button onclick="addVocabManual()" class="w-full bg-indigo-600 py-3 rounded-xl font-bold mb-4">Hinzufügen</button>
                 
+                <button onclick="toggleLessons()" class="w-full bg-emerald-600 py-3 rounded-xl font-bold mb-4">📚 Vokabeln</button>
+                
+                <div id="lesson-menu" class="hidden mb-4 bg-slate-700/50 rounded-xl p-4 space-y-2">
+                    <button onclick="toggleLesson1()" class="w-full bg-slate-600 py-2 rounded-lg font-bold text-left px-4 hover:bg-slate-500">▶ Lektion 1</button>
+                    <div id="lesson-1-vocabs" class="hidden pl-4 space-y-1 mt-2">
+                        <button onclick="addLesson1()" class="w-full bg-purple-600 hover:bg-purple-500 py-2 rounded-lg text-sm">Alle Vokabeln hinzufügen</button>
+                    </div>
+                </div>
+                
                 <div class="relative">
                     <input type="file" id="file-input" class="hidden" accept="image/*" onchange="handleImgUpload(event)">
                     <button onclick="document.getElementById('file-input').click()" id="btn-scan" 
@@ -92,6 +101,58 @@
         // --- DATA & STATE ---
         let vocabs = JSON.parse(localStorage.getItem('latin-v1')) || [];
         let currentQuizItem = null;
+
+        // Vorgefertigte Vokabeln - Lektion 1
+        const lesson1Vocabs = [
+            { la: "sol", de: "die Sonne" },
+            { la: "ardere", de: "(ver)brennen; entbrannt sein" },
+            { la: "silentium", de: "die Ruhe, die Stille; das Schweigen" },
+            { la: "esse", de: "sein" },
+            { la: "villa", de: "das (Land-)Haus; das Landgut" },
+            { la: "iacere", de: "(da)liegen" },
+            { la: "etiam", de: "auch; sogar" },
+            { la: "canis", de: "der Hund" },
+            { la: "tacere", de: "schweigen, still sein" },
+            { la: "asinus", de: "der Esel" },
+            { la: "non iam", de: "nicht mehr" },
+            { la: "clamare", de: "schreien, (laut) rufen" },
+            { la: "stare", de: "(da)stehen" },
+            { la: "et", de: "und; auch" },
+            { la: "exspectare", de: "warten (auf), erwarten" },
+            { la: "ubi", de: "wo?" },
+            { la: "cur", de: "warum?" },
+            { la: "amica", de: "die Freundin" },
+            { la: "non", de: "nicht" },
+            { la: "venire", de: "kommen" },
+            { la: "cessare", de: "zögern; sich Zeit lassen" },
+            { la: "placere", de: "gefallen; Spaß machen" },
+            { la: "subito", de: "plötzlich" },
+            { la: "quis/quid", de: "wer?/was?" },
+            { la: "ecce", de: "schau!/schaut!, sieh da!/seht!" }
+        ];
+
+        // --- LESSON MENU FUNCTIONS ---
+        function toggleLessons() {
+            const menu = document.getElementById('lesson-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleLesson1() {
+            const vocabList = document.getElementById('lesson-1-vocabs');
+            vocabList.classList.toggle('hidden');
+        }
+
+        function addLesson1() {
+            lesson1Vocabs.forEach(vocab => {
+                // Nur hinzufügen wenn nicht bereits vorhanden
+                const exists = vocabs.some(v => v.la === vocab.la && v.de === vocab.de);
+                if (!exists) {
+                    vocabs.push(vocab);
+                }
+            });
+            renderVocabs();
+            alert("Lektion 1 Vokabeln wurden hinzugefügt!");
+        }
 
         // --- NAVIGATION ---
         function showTab(tabId) {
