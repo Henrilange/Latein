@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Translate Latin AI - Gemini Edition",
+  "description": "A sophisticated Latin learning platform powered by Google Gemini. Features vocabulary management, interactive quizzes, and AI-powered text translation and image-to-vocabulary scanning.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
